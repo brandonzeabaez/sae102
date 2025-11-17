@@ -1,9 +1,12 @@
 #include <iostream>
 
 using namespace std;
-
+void helloWorld()
+{
+    cout <<"Hello World";
+}
 int main()
 {
-    cout << "Hello World!" << endl;
+    helloWorld();
     return 0;
 }

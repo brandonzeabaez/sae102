@@ -13,20 +13,19 @@ string litUneString (){ // code fourni par le professeur
 }
 
 vector<int> litUnChoix (){
-    string uneChaine;
+    string chaine;
     while (true){
-        getline (cin, uneChaine);
-        if ((!cin) || (uneChaine.substr(0,2) != "//")) break;
+        getline (cin, chaine);
+        if ((!cin) || (chaine.substr(0,2) != "//")) break;
     }
 
-    string chaine = stoi(uneChaine);
     string choix;
     vector<int> choix_liste;
     for (unsigned int i=0; i<chaine.size(); ++i) {
         if (chaine[i] >='0' && chaine[i] <= '9') {
             choix += chaine[i];
-        } else if (choix == "") {
-            choix_liste.push_back(int(choix));
+        } else if (choix != "") {
+            choix_liste.push_back(stoi(choix));
             choix = "";
         }
     }
@@ -58,11 +57,18 @@ void affichVectString (const vector<string> & v){
     cout << endl;
 }
 
+void affichVectInt (const vector<int> & v){
+    for (const int & val : v)
+        cout << to_string(val) << '\t';
+    cout << endl;
+}
+
 void affichVectParticipants (const vector<participant> & vPart){
     for (const participant & part : vPart){
         cout << part.nom << endl;
         cout << part.prenom << endl;
-        cout << part.choix << endl;
+        //cout << part.choix << endl;
+        affichVectInt(part.choix);
     }
 }
 
@@ -75,8 +81,8 @@ int supprimerElem (vector<int> & tab, const size_t & pos){
     return temp;
 }
 
-bool choixInvalide(tabCand, choix) {
-    return vCand[choix].estHorsCourse || choix < 1 || choix >= tab.size();
+bool choixInvalide(vector<candidat> && tabCand, int && choix) {
+    return tabCand[choix].estHorsCourse || choix < 1 || choix >= int(tabCand.size());
 }
 
 
@@ -87,16 +93,18 @@ int main()
     return 0;
     */
     /* On commence par mettre dans une liste les candidats*/
-    vector <string> vCandidats;
+    vector <candidat> vCandidats;
     string ligne;
     while (true) {
         ligne = litUneString();
         if (ligne == string (10, '-')) break; // On considère une ligne de 10 '-' comme la fin de la section de definition des candidats
-        vCandidats.push_back(candidat{ligne, vector<participant>, false}); // on met une liste vide pour les electeurs
+        vector<participant> tmp;
+        vCandidats.push_back(candidat{ligne, tmp, false}); // on met une liste vide pour les electeurs
     }
 
     /* debug */
-    affichVectString (vCandidats);
+    // à coder: des fonctions pour afficher les candidats avec en paramètre vector<candidat> et les participants avec vector<participant>
+    // affichVectString (vCandidats);
 
     //On lit les datas du clavier, et on les stocke
     vector<participant> vParticipant;
@@ -119,29 +127,30 @@ int main()
     */
 
     candidat gagnant;
-    while (!gagnant) {
+    bool gagnantTrouve = false;
+    while (gagnantTrouve) {
         /*
         On va implémenter ici notre algorithme de code pour le système de vote alternatif
         On a détaillé dans le dossier déjà le fonctionnement de ce système de vote,
         on commence donc par lire les choix des participants et ainsi comptabiliser
         pour chaque candidats ses voix.
         */
-        for (unsigned int i=0; i<vParticipant.size(); ++1) {
+        for (unsigned int i=0; i<vParticipant.size(); ++i) {
             // on commence par determiner le choix du participant sur lequel on itère.
             // pour que le choix soit valide, il doit correspondre au choix préféré du participant
             // parmi les candidats valides
-            bool choixExploitable = vParticipants[i].choix.size() > 0;
-            while (choixExploitable && choixInvalide(vCandidats, choix)) {
+            bool choixExploitable = vParticipant[i].choix.size() > 0;
+            while (choixExploitable && choixInvalide(vCandidats, vParticipant[i].choix)) {
                 // on purge au fur et à mesure les candidats hors course des votes des participants
-                supprimerElem(vParticipants[i].choix, 0);
+                supprimerElem(vParticipant[i].choix, 0);
                 // on vérifie à chaque fois qu'il y a encore de quoi determiner le vote du participant
-                choixExploitable = vParticipants[i].choix.size() > 0;
+                choixExploitable = vParticipant[i].choix.size() > 0;
             }
 
             // on ajoute aux electeurs du candidat le participant qui lui accorde son vote
             // les numeros de choix des particpants correspondont à leur indice dans la liste
             // vCandidats auquel on additionne 1. On utilise donc -1 pour obtenir l'indice.
-            vCandidats[vParticipants[i].choix[0] -1].electeur.push_pack(vParticipants[i]);
+            vCandidats[vParticipant[i].choix[0] -1].electeur.push_pack(vParticipants[i]);
         }
 
         // on détermine si un des candidats a la majorité absolue
@@ -155,6 +164,7 @@ int main()
                     }
                 }
                 gagnant = vCandidats[i];
+                gagnantTrouve = true;
             }
         }
 
@@ -164,7 +174,7 @@ int main()
         */
         vector<unsigned int> indicesMin; // on gère les candidats en dernière positions avec une liste pour gérer les ex aequo
         indicesMin.push_back(0);
-        for (unsigned int i=1; i<vCandidats.size(); ++1) { // on commence à 1 car on n'a pas besoin de tester pour i=0
+        for (unsigned int i=1; i<vCandidats.size(); ++i) { // on commence à 1 car on n'a pas besoin de tester pour i=0
             if (vCandidats[i] == vCandidats[indicesMin[0]]) {
                 indicesMin.push_back(i);
             }

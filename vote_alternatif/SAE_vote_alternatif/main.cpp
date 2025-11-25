@@ -12,7 +12,7 @@ string litUneString (){ // code fourni par le professeur
     return uneChaine;
 }
 
-vector<int> litUnChoix (){
+vector<int> litUnChoix (){ // code fourni par le professeur modifié
     string chaine;
     while (true){
         getline (cin, chaine);
@@ -60,7 +60,6 @@ void affichVectParticipants (const vector<participant> & vPart){
     for (const participant & part : vPart){
         cout << part.nom << endl;
         cout << part.prenom << endl;
-        //cout << part.choix << endl;
         affichVectInt(part.choix);
     }
 }
@@ -80,12 +79,6 @@ bool choixInvalide(const vector<candidat> & tabCand, const int & choix) {
 
 
 int main() {
-    /*
-    cout << "Hello World!" << endl;
-    return 0;
-    */
-
-
     /* On commence par mettre dans une liste les candidats*/
     vector <candidat> vCandidats;
     string ligne;
@@ -97,26 +90,19 @@ int main() {
         vCandidats.push_back(candidat{ligne, tmp, false}); // on met une liste vide pour les electeurs
     }
 
-    /* debug */
-    // à coder: des fonctions pour afficher les candidats avec en paramètre vector<candidat> et les participants avec vector<participant>
-    // affichVectString (vCandidats);
-
     //On lit les datas du clavier, et on les stocke
     vector<participant> vParticipant;
 
     for (unsigned i (0); i < 100; ++i){ // on considère qu'on aura toujours 110 participants
-    //while (true) { // tant qu'on atteint pas la fin du fichier
         string nom (litUneString());
         string prenom  (litUneString());
         vector<int> choixDuParticipant (litUnChoix()); // choix par ordre de préférence décroissante
-        //if (nom == "") break;
         vParticipant.push_back(participant{nom, prenom, choixDuParticipant});
     }
 
     candidat gagnant;
     bool gagnantTrouve = false;
     while (!gagnantTrouve) {
-        //cout << gagnantTrouve;
         /*
         On va implémenter ici notre algorithme de code pour le système de vote alternatif
         On a détaillé dans le dossier déjà le fonctionnement de ce système de vote,
@@ -153,7 +139,6 @@ int main() {
                         vCandidats[j].estHorsCourse = true;
                     }
                 }
-                //cout << vCandidats[i].nom;
                 gagnant = vCandidats[i];
                 gagnantTrouve = true;
             }
@@ -186,7 +171,7 @@ int main() {
                 nbEnLice += 1;
             }
         }
-        if (indicesMin.size() == nbEnLice) {
+        if (indicesMin.size() == nbEnLice && !gagnantTrouve) {
             cout << "Les candidats \"";
             for (unsigned int i=0; i<vCandidats.size(); ++i) {
                 cout << vCandidats[i].nom << ", ";

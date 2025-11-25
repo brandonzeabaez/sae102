@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 16.0.2, 2025-11-24T12:02:45. -->
+<!-- Written by QtCreator 16.0.2, 2025-11-25T22:15:46. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -248,9 +248,8 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/amuhome/s25003254/sae102/vote_alternatif/SAE_vote_alternatif/SAE_vote_alternatif.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
-    <value type="QString" key="RunConfiguration.Arguments">/amuhome/s25003254/R101/SAE/SAE_vote_alternatif/build/Desktop_Qt_6_9_1-Debug &lt;~/sae102/vote_alternatif/entree1.txt</value>
+    <value type="QString" key="RunConfiguration.Arguments">/amuhome/s25003254/R101/SAE/SAE_vote_alternatif/build/Desktop_Qt_6_9_1-Debug &lt;~/sae102/vote_alternatif/SAE_vote_alternatif/entree2_.txt</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
-    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">/amuhome/s25003254/sae102/vote_alternatif/SAE_vote_alternatif/build</value>
    </valuemap>
